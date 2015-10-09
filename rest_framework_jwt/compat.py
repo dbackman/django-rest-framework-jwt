@@ -53,9 +53,7 @@ def get_username(user):
 
 
 def get_request_data(request):
-    if hasattr(request, 'data'):
-        data = request.data
-    else:
-        # DRF < 3.2
-        data = request.DATA
-    return data
+    try:
+        return request.data
+    except AttributeError:
+        return request.DATA
