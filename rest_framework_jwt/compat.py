@@ -56,4 +56,5 @@ def get_request_data(request):
     try:
         return request.data
     except AttributeError:
+        # DRF < 3.2
         return request.DATA

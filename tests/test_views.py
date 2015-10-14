@@ -158,6 +158,15 @@ class ObtainJSONWebTokenTests(BaseTestCase):
 
         self.assertEqual(response.status_code, 400)
 
+    def test_jwt_login_bad_content_type(self):
+        client = APIClient(enforce_csrf_checks=True)
+
+        response = client.post('/auth-token/', self.data,
+                               content_type="application/vnd.test+bad")
+
+        self.assertEqual(response.status_code,
+                         status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+
 
 @unittest.skipIf(get_version() < '1.5.0', 'No Configurable User model feature')
 @override_settings(AUTH_USER_MODEL='tests.CustomUser')
